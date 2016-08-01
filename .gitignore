@@ -1,0 +1,4 @@
+# Python property
+property/venv/
+property/.idea
+*.pyc
