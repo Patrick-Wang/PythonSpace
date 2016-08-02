@@ -1,4 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from . import hrm
+from .auth import accounts
+
