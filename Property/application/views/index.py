@@ -21,9 +21,6 @@ def index():
 @blueprint.route('/createDB')
 def create_db():
     db_property.create_all()
-    new_account = Accounts('wangxin', 'wangxin@property.com', '123456', 'patrick')
-    db_property.session.add(new_account)
-    db_property.session.commit()
     return render_template('index.html')
 
 

@@ -9,5 +9,7 @@
 </div>
 <div class="col-md-4">
     {{ wtf.quick_form(login_form) }}
+    <br>
+    <p>New user? <a href="{{ url_for('auth_blueprint.user_register') }}">Click here to register</a>.</p>
 </div>
 {% endblock %}

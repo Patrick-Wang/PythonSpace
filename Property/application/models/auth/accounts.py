@@ -9,6 +9,8 @@ from ... import db_property
 from ... import login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from flask import current_app
 
 
 class Accounts(UserMixin, db_property.Model):
@@ -20,6 +22,7 @@ class Accounts(UserMixin, db_property.Model):
     email = db_property.Column(db_property.String(128), unique=True, index=True)
     nickname = db_property.Column(db_property.String(20))
     pwd = db_property.Column(db_property.String(128))
+    confirmed = db_property.Column(db_property.Boolean, default=False)
     # role_id = db_property.Column(db_property.Integer, db_property.ForeignKey('roles.id'))
     # dept_id = db_property.Column(db_property.Integer, db_property.ForeignKey('departments.id'))
 
@@ -44,6 +47,23 @@ class Accounts(UserMixin, db_property.Model):
 
     def __repr__(self):
         return '<Accounts %r>' % self.username
+
+    def gen_confirm_token(self, expiration=3600):
+        s = Serializer(current_app.config['SECRET_KEY'], expiration)
+        return s.dumps({'confirm': self.id})
+
+    def confirm(self, token):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except:
+            return False
+        if data.get('confirm') != self.id:
+            return False
+        self.confirmed = True
+        db_property.session.add(self)
+        db_property.session.commit()
+        return True
 
 
 @login_manager.user_loader

@@ -18,3 +18,14 @@ class DefaultConfig(object):
 
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_ECHO = False
+
+    # email config
+    MAIL_SERVER = 'smtp.163.com'
+    MAIL_PORT = 465
+    MAIL_USE_SSL = True
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    PROPERTY_MAIL_SUBJECT_PREFIX = '[PROPERTY]'
+    PROPERTY_MAIL_SENDER = 'Property Admin <property@example.com>'
+    PROPERTY_ADMIN = os.environ.get('PROPERTY_ADMIN')
+
