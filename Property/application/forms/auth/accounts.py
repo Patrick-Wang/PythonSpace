@@ -6,7 +6,7 @@
 #  @ author : Patrick Wang
 
 from flask_wtf import Form
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
 from wtforms import ValidationError
 from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo
 from ...models.auth.accounts import Accounts
@@ -39,3 +39,10 @@ class RegistrationForm(Form):
     def validate_username(self, field):
         if Accounts.query.filter_by(username=field.data).first():
             raise ValidationError('User name already registered')
+
+
+class ProfileForm(Form):
+    nickname = StringField('Nick name', validators=[Length(0, 64)])
+    location = StringField('Location', validators=[Length(0, 64)])
+    about_me = TextAreaField('About me')
+    submit = SubmitField('Submit')

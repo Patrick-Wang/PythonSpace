@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Property Management - Edit profile{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Edit profile</h1>
+</div>
+<div class="col-md-4">
+    {{ wtf.quick_form(edit_form) }}
+</div>
+{% endblock %}

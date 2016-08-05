@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Property - {{ account.username }}{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>{{ account.username }}</h1>
+    {% if account.name or account.location %}
+    <p>
+        {% if account.name %}{{ account.name }}{% endif %}
+        {% if account.location %}
+            From <a href="http://maps.google.com/?q={{ account.location }}">{{ account.location }}</a>
+        {% endif %}
+    </p>
+    {% endif %}
+    {% if current_user.is_admin() %}
+    <p><a href="mailto:{{ account.email }}">{{ account.email }}</a></p>
+    {% endif %}
+    {% if account.about_me %}<p>{{ account.about_me }}</p>{% endif %}
+    <p>Member since {{ moment(account.member_since).format('L') }}. Last seen {{ moment(account.last_seen).fromNow() }}.</p>
+</div>
+{% endblock %}

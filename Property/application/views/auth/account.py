@@ -39,8 +39,8 @@ def user_logout():
 def user_register():
     reg_form = RegistrationForm()
     if reg_form.validate_on_submit():
-        new_user = Accounts(reg_form.username.data, reg_form.email.data,
-                            reg_form.password.data, reg_form.nickname.data)
+        new_user = Accounts(username=reg_form.username.data, email=reg_form.email.data,
+                            password=reg_form.password.data, nickname=reg_form.nickname.data)
         db_property.session.add(new_user)
         db_property.session.commit()
 
@@ -76,6 +76,8 @@ def resend_confirmation():
 
 @blueprint.before_app_request
 def before_request():
+    if current_user.is_authenticated:
+        current_user.ping()
     if current_user.is_authenticated \
             and not current_user.confirmed \
             and request.endpoint[:15] != 'auth_blueprint.' \

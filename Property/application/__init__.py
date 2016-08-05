@@ -7,10 +7,13 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_mail import Mail
 from config import load_config
+from flask_moment import Moment
+
 
 bootstrap = Bootstrap()
 db_property = SQLAlchemy()
 mail = Mail()
+moment = Moment()
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
 login_manager.login_view = 'auth_blueprint.user_login'
@@ -25,6 +28,7 @@ def create_app():
     login_manager.init_app(app)
     db_property.init_app(app)
     mail.init_app(app)
+    moment.init_app(app)
 
     # Load config
     config = load_config()
@@ -35,5 +39,8 @@ def create_app():
 
     from application.views.index import blueprint as index_blueprint
     app.register_blueprint(index_blueprint)
+
+    from application.views.pages import blueprint as pages_blueprint
+    app.register_blueprint(pages_blueprint)
 
     return app
