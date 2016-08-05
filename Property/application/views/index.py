@@ -23,9 +23,9 @@ def index():
 def create_db():
     db_property.create_all()
     account = Accounts(username='wangxin', email='18624020715@163.com',
-                       password='123456', nickname='patrick', location='shenyang', about_me='about me')
+                       password='123456', nickname='patrick', location='shenyang', about_me='about me', confirmed=1)
     account2 = Accounts(username='wangxin2', email='wangxin229@163.com',
-                       password='123456', nickname='patrick', location='shenyang', about_me='about me')
+                       password='123456', nickname='patrick', location='shenyang', about_me='about me', confirmed=1)
     db_property.session.add(account)
     db_property.session.add(account2)
     db_property.session.commit()
